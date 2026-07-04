@@ -1,0 +1,102 @@
+# ============================================================
+# Compilation automatique de l'APK Android via GitHub Actions
+# ------------------------------------------------------------
+# À chaque push sur la branche du jeu (ou lancement manuel),
+# ce workflow :
+#   1. exporte le projet Godot 4.3 en APK de debug (image godot-ci),
+#   2. publie l'APK en artefact de build,
+#   3. attache l'APK à la release "apk-latest" du dépôt
+#      -> téléchargeable directement depuis un téléphone.
+# ============================================================
+name: Build APK Android
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - claude/godot-android-topdown-game-y6evxv
+      - main
+
+permissions:
+  contents: write   # nécessaire pour créer/mettre à jour la release
+
+env:
+  GODOT_VERSION: "4.3"
+
+jobs:
+  export-android:
+    name: Export APK (debug)
+    runs-on: ubuntu-latest
+    container:
+      # Image communautaire avec Godot + modèles d'export + SDK Android
+      image: barichello/godot-ci:4.3
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Installer les modèles d'export Godot
+        run: |
+          mkdir -p ~/.local/share/godot/export_templates
+          cp -r /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable \
+                ~/.local/share/godot/export_templates/ 2>/dev/null || true
+          ls -la ~/.local/share/godot/export_templates/
+
+      - name: Configurer le SDK Android et la clé de debug
+        run: |
+          # Récupère la config éventuelle de l'image (chemins déjà réglés)
+          mkdir -p ~/.config
+          cp -r /root/.config/godot ~/.config/ 2>/dev/null || true
+
+          # Clé de signature de débogage si absente
+          if [ ! -f /root/debug.keystore ]; then
+            keytool -keyalg RSA -genkeypair -alias androiddebugkey \
+              -keypass android -keystore /root/debug.keystore -storepass android \
+              -dname "CN=Android Debug,O=Android,C=US" -validity 9999
+          fi
+
+          # Détection des chemins SDK / JDK
+          SDK_PATH="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/lib/android-sdk}}"
+          JAVA_PATH="${JAVA_HOME:-$(dirname "$(dirname "$(readlink -f "$(which java)")")")}"
+          echo "SDK Android : $SDK_PATH"
+          echo "JDK         : $JAVA_PATH"
+          echo "apksigner   : $(find "$SDK_PATH" -name apksigner 2>/dev/null | head -1)"
+
+          # Réglages de l'éditeur Godot (headless)
+          mkdir -p ~/.config/godot
+          {
+            echo '[gd_resource type="EditorSettings" format=3]'
+            echo ''
+            echo '[resource]'
+            echo "export/android/java_sdk_path = \"$JAVA_PATH\""
+            echo "export/android/android_sdk_path = \"$SDK_PATH\""
+            echo 'export/android/debug_keystore = "/root/debug.keystore"'
+            echo 'export/android/debug_keystore_user = "androiddebugkey"'
+            echo 'export/android/debug_keystore_pass = "android"'
+          } > ~/.config/godot/editor_settings-4.3.tres
+          cat ~/.config/godot/editor_settings-4.3.tres
+
+      - name: Importer les ressources du projet
+        run: godot --headless --verbose --import || true
+
+      - name: Exporter l'APK
+        run: |
+          mkdir -p build
+          godot --headless --verbose --export-debug "Android" build/MiniGame.apk
+          ls -lh build/
+
+      - name: Publier l'APK en artefact de build
+        uses: actions/upload-artifact@v4
+        with:
+          name: MiniGame-APK
+          path: build/MiniGame.apk
+
+      - name: Attacher l'APK à la release "apk-latest"
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: apk-latest
+          name: MiniGame APK (dernière version)
+          body: >
+            APK de debug généré automatiquement à chaque mise à jour du jeu.
+            Sur votre téléphone Android : téléchargez MiniGame.apk ci-dessous,
+            ouvrez-le et autorisez l'installation depuis cette source.
+          files: build/MiniGame.apk
