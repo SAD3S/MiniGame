@@ -1,0 +1,67 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://scripts/monde.gd" id="1_monde"]
+[ext_resource type="Texture2D" path="res://assets/herbe.svg" id="2_herbe"]
+[ext_resource type="PackedScene" path="res://scenes/joueur.tscn" id="3_joueur"]
+[ext_resource type="PackedScene" path="res://scenes/arbre.tscn" id="4_arbre"]
+[ext_resource type="PackedScene" path="res://scenes/rocher.tscn" id="5_rocher"]
+[ext_resource type="PackedScene" path="res://scenes/joystick.tscn" id="6_joystick"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_herbe"]
+texture = ExtResource("2_herbe")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_sol"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_herbe")
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_monde")
+
+[node name="Sol" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_sol")
+
+[node name="Monde" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Obstacles" type="Node2D" parent="Monde"]
+y_sort_enabled = true
+
+[node name="Arbre1" parent="Monde/Obstacles" instance=ExtResource("4_arbre")]
+position = Vector2(224, 288)
+
+[node name="Arbre2" parent="Monde/Obstacles" instance=ExtResource("4_arbre")]
+position = Vector2(992, 224)
+
+[node name="Arbre3" parent="Monde/Obstacles" instance=ExtResource("4_arbre")]
+position = Vector2(288, 928)
+
+[node name="Arbre4" parent="Monde/Obstacles" instance=ExtResource("4_arbre")]
+position = Vector2(1056, 1024)
+
+[node name="Arbre5" parent="Monde/Obstacles" instance=ExtResource("4_arbre")]
+position = Vector2(768, 448)
+
+[node name="Arbre6" parent="Monde/Obstacles" instance=ExtResource("4_arbre")]
+position = Vector2(512, 1120)
+
+[node name="Rocher1" parent="Monde/Obstacles" instance=ExtResource("5_rocher")]
+position = Vector2(480, 800)
+
+[node name="Rocher2" parent="Monde/Obstacles" instance=ExtResource("5_rocher")]
+position = Vector2(896, 672)
+
+[node name="Rocher3" parent="Monde/Obstacles" instance=ExtResource("5_rocher")]
+position = Vector2(160, 576)
+
+[node name="Rocher4" parent="Monde/Obstacles" instance=ExtResource("5_rocher")]
+position = Vector2(832, 1120)
+
+[node name="Joueur" parent="Monde" instance=ExtResource("3_joueur")]
+position = Vector2(640, 640)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="JoystickVirtuel" parent="UI" instance=ExtResource("6_joystick")]

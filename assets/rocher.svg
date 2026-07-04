@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="76" height="56">
+  <!-- Rocher (obstacle avec collision). -->
+  <ellipse cx="38" cy="50" rx="30" ry="6" fill="#000000" opacity="0.18"/>
+  <path d="M12 46 L8 30 L22 14 L48 10 L68 22 L66 42 L52 50 L20 50 Z"
+        fill="#9aa0a6" stroke="#6f757b" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M22 20 L40 15 L52 22 L34 28 Z" fill="#c2c7cc"/>
+</svg>

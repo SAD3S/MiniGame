@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="64">
+  <!-- Atlas de 2 tuiles d'herbe de 64x64 px (variante claire / variante foncée).
+       Le TileMap pioche aléatoirement entre les deux pour un sol vivant.
+       POUR CHANGER LE SOL : remplacez ce fichier (gardez 2 tuiles de 64x64). -->
+
+  <!-- Tuile 1 : herbe claire -->
+  <rect x="0" y="0" width="64" height="64" fill="#6abe30"/>
+  <path d="M12 46 q2 -9 4 0 z" fill="#8ede50"/>
+  <path d="M30 22 q2 -9 4 0 z" fill="#8ede50"/>
+  <path d="M48 40 q2 -9 4 0 z" fill="#8ede50"/>
+  <path d="M20 60 q2 -8 4 0 z" fill="#5aa626"/>
+  <path d="M52 14 q2 -8 4 0 z" fill="#5aa626"/>
+  <circle cx="8" cy="12" r="1.6" fill="#8ede50"/>
+  <circle cx="40" cy="54" r="1.6" fill="#8ede50"/>
+
+  <!-- Tuile 2 : herbe légèrement plus foncée -->
+  <rect x="64" y="0" width="64" height="64" fill="#63b32c"/>
+  <path d="M78 30 q2 -9 4 0 z" fill="#84d548"/>
+  <path d="M100 50 q2 -9 4 0 z" fill="#84d548"/>
+  <path d="M114 18 q2 -9 4 0 z" fill="#84d548"/>
+  <path d="M90 12 q2 -8 4 0 z" fill="#549e22"/>
+  <path d="M72 58 q2 -8 4 0 z" fill="#549e22"/>
+  <circle cx="108" cy="38" r="1.6" fill="#84d548"/>
+</svg>

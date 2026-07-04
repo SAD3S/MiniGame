@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128">
+  <!-- Icône du jeu : petit personnage orange sur fond d'herbe -->
+  <rect width="128" height="128" rx="24" fill="#6abe30"/>
+  <rect width="128" height="128" rx="24" fill="none" stroke="#4e9a22" stroke-width="6"/>
+  <circle cx="64" cy="68" r="34" fill="#ff8c42" stroke="#d96b25" stroke-width="5"/>
+  <circle cx="56" cy="60" r="5.5" fill="#2b2b2b"/>
+  <circle cx="76" cy="60" r="5.5" fill="#2b2b2b"/>
+  <path d="M56 80 Q66 88 78 78" stroke="#2b2b2b" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

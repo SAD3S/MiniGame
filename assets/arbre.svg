@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="88" height="104">
+  <!-- Arbre (obstacle avec collision au niveau du tronc). -->
+  <ellipse cx="44" cy="98" rx="22" ry="6" fill="#000000" opacity="0.18"/>
+  <rect x="37" y="62" width="14" height="36" rx="6" fill="#8a5a2b" stroke="#6e4520" stroke-width="3"/>
+  <circle cx="44" cy="38" r="30" fill="#3f8f2e" stroke="#2f6e22" stroke-width="3"/>
+  <circle cx="24" cy="50" r="18" fill="#4aa337"/>
+  <circle cx="64" cy="50" r="18" fill="#4aa337"/>
+  <circle cx="34" cy="30" r="6" fill="#63c14c"/>
+  <circle cx="55" cy="44" r="5" fill="#63c14c"/>
+</svg>

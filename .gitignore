@@ -1,0 +1,14 @@
+# Dossier interne de Godot (caches, imports) — régénéré automatiquement
+.godot/
+
+# Fichiers d'export générés
+build/
+*.apk
+*.aab
+
+# Modèle de build Android installé localement
+android/
+
+# Divers
+*.tmp
+.DS_Store
